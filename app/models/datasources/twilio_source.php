@@ -34,24 +34,30 @@ class TwilioSource extends DataSource {
 				'type' => 'string',
 				'null' => true,
 				'key' => 'primary',
-				'length' => 34,
+				'length' => 36,
 			),
 			'From' => array(
 				'type' => 'integer',
 				'null' => true,
-				'key' => 'primary',
+				'default' => '',
 				'length' => 10,
 			),
 			'To' => array(
 				'type' => 'integer',
 				'null' => true,
-				'key' => 'primary',
+				'default' => '',
 				'length' => 10
 			),
 			'Body' => array(
 				'type' => 'string',
 				'null' => true,
-				'key' => 'primary',
+				'default' => '',
+				'length' => 160
+			),
+			'Status' => array(
+				'type' => 'string',
+				'null' => true,
+				'default' => '',
 				'length' => 160
 			),
 		)
@@ -60,7 +66,7 @@ class TwilioSource extends DataSource {
 	public function __construct($config = array()) {
 	    $config += $this->_default;
 		$auth = "{$config['sid']}:{$config['token']}";
-		$this->connection = new HttpSocket("https://{$auth}@api.twilio.com/");
+		$this->Socket = new TwilioSocket("https://{$auth}@api.twilio.com/");
 		parent::__construct($config);
 	}
 
@@ -69,8 +75,7 @@ class TwilioSource extends DataSource {
 	}
 
 	public function read($model, $queryData = array()) {
-		$url = "/{$this->config['version']}/Accounts/{$this->config['sid']}/SMS/Messages.json";
-		$response = json_decode($this->connection->get($url), true);
+		$response = $this->Socket->get("/{$this->config['version']}/Accounts/{$this->config['sid']}/SMS/Messages.json");
 		$results = array();
 		foreach ($response['TwilioResponse']['SMSMessages'] as $record) {
 			$record = array('Text' => $record['SMSMessage']);
@@ -81,21 +86,37 @@ class TwilioSource extends DataSource {
 
 	public function create($model, $fields = array(), $values = array()) {
 		$data = array_combine($fields, $values);
-		if ($this->config['environment'] == 'sandbox') $data['Body'] = "{$this->config['sandbox_pin']} {$data['Body']}";
-		$result = $this->connection->post("/{$this->config['version']}/Accounts/{$this->config['sid']}/SMS/Messages.json", $data);
-		$result = json_decode($result, true);
+		if ($this->config['environment'] == 'sandbox') {
+			$data['Body'] = "{$this->config['sandbox_pin']} {$data['Body']}";
+			$data['From'] = $this->config['sandbox_number'];
+		}
+		$response = $this->Socket->post("/{$this->config['version']}/Accounts/{$this->config['sid']}/SMS/Messages.json", $data);
+
 		if (isset($result['TwilioResponse']['SMSMessage']['Sid'])) {
-			$model->setInsertId($result['TwilioResponse']['SMSMessage']['Sid']);
-			$model->id = $result['TwilioResponse']['SMSMessage']['Sid'];
-			return true;
-		} else {
-			$model->onError();
+			$model->setInsertId($response['TwilioResponse']['SMSMessage']['Sid']);
+			$model->id = $response['TwilioResponse']['SMSMessage']['Sid'];
+			$model->data[$model->alias][$model->primaryKey] = $response['TwilioResponse']['SMSMessage']['Sid'];
+			return $response;
+		}
+		if($model->onError())
+		{
 			return false;
 		}
+			return $response;
 	}
 
 	public function describe($model) {
 		return $this->_schema['texts'];
+	}
+}
+
+class TwilioSocket extends HttpSocket {
+	function post($uri = null, $data = array(), $request = array()) {
+		return json_decode(parent::post($uri, $data, $request), true);
+	}
+
+	function get($uri = null, $query = array(), $request = array()) {
+		return json_decode(parent::get($uri, $query, $request), true);
 	}
 }
 ?>
