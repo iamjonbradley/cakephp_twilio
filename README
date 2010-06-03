@@ -1,0 +1,16 @@
+This is a CakePHP Datasource for accessing the Twilio API via standard model functions in CakePHP.
+
+
+
+REQUIREMENTS
+-----------------
+PHP 5.x
+CakePHP 1.3.x (may work on 1.2 but haven't tested)
+
+
+INSTALL
+-----------------
+
+1. Just add the files to a new CakePHP Project.
+2. edit the database file and use your credentials.
+3. modify the texts controller to your needs and voila!
