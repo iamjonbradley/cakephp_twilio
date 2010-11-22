@@ -92,7 +92,7 @@ class TwilioSource extends DataSource {
 		}
 		$response = $this->Socket->post("/{$this->config['version']}/Accounts/{$this->config['sid']}/SMS/Messages.json", $data);
 
-		if (isset($result['TwilioResponse']['SMSMessage']['Sid'])) {
+		if (isset($response['TwilioResponse']['SMSMessage']['Sid'])) {
 			$model->setInsertId($response['TwilioResponse']['SMSMessage']['Sid']);
 			$model->id = $response['TwilioResponse']['SMSMessage']['Sid'];
 			$model->data[$model->alias][$model->primaryKey] = $response['TwilioResponse']['SMSMessage']['Sid'];
