@@ -14,7 +14,7 @@
  *
  * @filesource    /app/models/datasources/twilio_source.php
  * @version       1.1
- * @copyright     Copyright 2010, Life Is Content (http://www.lifeiscontent.net/twilio)
+ * @copyright     Copyright 2010, Life Is Content (http://www.lifeiscontent.net)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
