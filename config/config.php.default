@@ -1,0 +1,43 @@
+<?php
+/**
+ * Twilio Plugin Configuration Files
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright 2010 Jonathan Bradley (http://iamjonbradley.com)
+ * @link          http://iamjonbradley.com
+ * @package       twilio
+ * @subpackage    twilio.config
+ * @since         v 1.0.0a
+ * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
+ 
+/**
+ * ##############################################################
+ * Configuration Variables
+ * ##############################################################
+ */
+
+$config['Twilio']['environment']      = 'sandbox';  // options production : sandbox
+$config['Twilio']['SendTo']           = '';         // who are we messaging
+$config['Twilio']['From']             = '';         // who are we sending from
+$config['Twilio']['sid']              = '';         // account sid   
+$config['Twilio']['token']            = '';         // account auth token   
+$config['Twilio']['sandbox_number']   = '';         // sandbox phone number 
+$config['Twilio']['sandbox_pin']      = '';         // sandbox pin number
+
+/**
+ * ##############################################################
+ * DO NOT EDIT BELOW THIS LINE
+ * ##############################################################
+ */
+ 
+// path for twilio cache files
+$config['Twilio']['Path']   = TMP .'incomming'. DS;
+// api version
+$config['Twilio']['version']   = '2008-08-01';
+
+// load configuratoin
+Configure::load('Twilio');
+

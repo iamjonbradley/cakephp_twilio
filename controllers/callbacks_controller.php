@@ -1,38 +1,30 @@
 <?php
-
-App::import('Core', 'File');
+/**
+ * Callback Handler for Twilio REST Requests
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright 2010 Jonathan Bradley (http://iamjonbradley.com)
+ * @link          http://iamjonbradley.com
+ * @package       twilio
+ * @subpackage    twilio.controllers
+ * @since         v 1.0.0a
+ * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
+ 
 class CallbacksController extends TwilioAppController {
   
-  var $uses = array();
-  var $components = array('Twilio.Sms');
+  public $name = 'Callbacks';
+  public $components = array('Twilio.Sms');
   
-  function calls () {
-    $this->__save();
+  public function calls () {
     $this->render('blank');
   }
   
-  function texts () {
+  public function texts () {
     $this->Sms->send($_GET['Body']);
-    $this->__save();
     $this->render('blank');
-  }
-  
-  private function __save() {
-    
-    // set filename
-    $time = microtime();
-    $time = str_replace(array('.', ' '), '', $time);
-    $time = $time .'.txt';
-    
-    // set the path
-    $path =  TMP .'incomming'. DS . $this->params['action'] . DS . $time;
-    $body = serialize($_GET['Body']);
-    
-    // save the response
-    $this->File = new File($path, 'w', true);
-    $this->File->write($body);
-    $this->File->close();
-    return true;
   }
 
 }

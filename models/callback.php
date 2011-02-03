@@ -1,6 +1,6 @@
 <?php
 /**
- * Text Model for sending out text messages
+ * Callback Model for sending out text messages
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
@@ -13,9 +13,9 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
  
-class Text extends TwilioAppModel { 
+class Callback extends TwilioAppModel { 
   
-  public $name = 'Text';
+  public $name = 'Callback';
   public $useDbConfig = 'twilio'; 
   public $useTable = false;  
     
