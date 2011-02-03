@@ -25,21 +25,18 @@ class TwilioSource extends DataSource {
 		parent::__construct($this->config);
 	}
 	
-  public function create ($msg, $sendTo = null) {
-    
-    echo '[b]';
-    die;
+  public function create ($model, $msg, $sendTo = null) {
     
     if (empty($sendTo))   
       $sendTo = $this->config['SendTo'];
+      
+      debug ($this->version);
+      die;
     
     $host = $this->config['version'] ."/Accounts/". $this->config['sid'] ."/SMS/Messages";
     $args = array('To'=> $sendTo, 'From' => $this->config['From'], 'Body' => $msg);
     
     $response = $this->client->request($host, "POST", $args);
-    
-    echo '[a]';
-    debug ($response); die;
     
 		if($response->IsError)
 			return "Error: {$response->ErrorMessage}";

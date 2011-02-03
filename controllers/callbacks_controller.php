@@ -16,15 +16,20 @@
 class CallbacksController extends TwilioAppController {
   
   public $name = 'Callbacks';
-  public $components = array('Twilio.Sms');
+  public $uses = array('Twilio.Text');
   
   public function calls () {
     $this->render('blank');
   }
   
   public function texts () {
-    $this->Sms->send($_GET['Body']);
+    $this->send($_GET['Body']);
     $this->render('blank');
   }
+	
+	public function send ($data, $to = null) {
+	  $response = $this->Text->save($_GET['Body'], $to = null);
+	  debug ($response);
+	}
 
 }
