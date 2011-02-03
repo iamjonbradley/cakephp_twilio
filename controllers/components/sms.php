@@ -13,7 +13,6 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
  
-App::import('Vendor', 'Twilio.twilio/twilio');
 class SmsComponent extends Object  {
   
 	//called before Controller::beforeFilter()
@@ -45,9 +44,6 @@ class SmsComponent extends Object  {
 	
 	public function send ($data, $to = null) {
 	  $model = ClassRegistry::init('Twilio.Text');
-	  $response = $model->save($data['Body'], $to = null);
-	  die;
-		if($response->IsError)
-  	  return ClassRegistry::init('Twilio.Callback')->saveFailed($this->params, $_GET);
+	  return  $model->save(array('To'=> Configure::read('Twilio.SendTo'), 'From' => Configure::read('Twilio.From'), 'Body' => $data));
 	}
 }

@@ -16,6 +16,5 @@
 class Text extends TwilioAppModel { 
   
   public $useDbConfig = 'twilio'; 
-  public $useTable = false;  
     
 } 
