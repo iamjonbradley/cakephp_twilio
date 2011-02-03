@@ -1,9 +1,0 @@
-Add this to your database.php config
-
-	var $twilio = array(
-		'datasource' => 'Twilio.twilio',
-		'AccountSid' => '',
-		'AuthToken' => '',
-
-	);
-	

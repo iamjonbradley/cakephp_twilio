@@ -1,0 +1,35 @@
+== Twilio Plugin for CakePHP
+
+  This is a basic Twilio Datasource for reading/creating text messages.
+
+== Getting Started
+
+1. Add this to your database.php config
+
+    var $twilio = array(
+    	'datasource' => 'Twilio.twilio',
+    );
+
+2. Edit the configuration settings on plugins/twilio/config/config.php
+
+    $config['Twilio']['environment']      = 'sandbox';  // options production : sandbox
+    $config['Twilio']['SendTo']           = '';         // who are we messaging
+    $config['Twilio']['From']             = '';         // who are we sending from
+    $config['Twilio']['sid']              = '';         // account sid   
+    $config['Twilio']['token']            = '';         // account auth token   
+    $config['Twilio']['sandbox_number']   = '';         // sandbox phone number 
+    $config['Twilio']['sandbox_pin']      = '';         // sandbox pin number
+
+== Aknowledgements
+
+This is based on the work provided by Aaron Infidel, you can see what he has here: 
+
+    https://github.com/aaroninfidel/CakePHP-Twilio-Datasource
+
+== Contributing
+
+We encourage you to contribute to the plugin, just fork and i'll make sure i check the merge logs
+
+== License
+
+This Plugin is released under the MIT license.
